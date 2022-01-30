@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <script src="/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body id="body">
+    <img id="test"src="">
+    <script>
+        var img = document.getElementById('test');
+        let socket = new WebSocket("ws://localhost:8080/socket");
+        socket.binaryType = "blob";k
+        socket.onopen = function(e) {
+        console.log("[open] Connection established");
+        console.log("Sending to server");
+        socket.send("hello");
+        };
+        socket.onmessage =handleReceive;
+
+        
+
+//     function arrayBufferToBase64( buffer ) {
+//     var binary = '';
+//     var bytes = new Uint8Array( buffer );
+//     var len = bytes.byteLength;
+//     for (var i = 0; i < len; i++) {
+//         binary += String.fromCharCode( bytes[ i ] );
+//     }
+//     return window.btoa( binary );
+// }
+
+        function handleReceive(message) {
+            var url =URL.createObjectURL(message.data)
+            img.src=url
+            // img.src = 'data:image/jpeg;base64,' +arrayBufferToBase64(message.data) ;
+        }
+
+    </script>
+</body></html>
